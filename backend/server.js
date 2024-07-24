@@ -20,7 +20,7 @@ app.get('/api/message', (req, res) => {
 
 // Catch-all handler to serve the React app
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, '/backend/public', 'index.html'));
 });
 
 
