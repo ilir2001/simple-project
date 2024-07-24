@@ -1,55 +1,57 @@
-// frontend/src/App.js
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import logo from './logo.svg';
 import './App.css';
 
-// Components
-const Home = () => {
-  const [message, setMessage] = React.useState('');
+function App() {
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    // Define an async function inside the effect to fetch data
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/api/message');
+        setMessage(response.data.message); // Assuming the API returns a JSON object with a "message" field
+      } catch (error) {
+        setError(error);
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  React.useEffect(() => {
-    fetch('http://localhost:5000/api/message')
-      .then(response => {
-        console.log(response);
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-        setMessage(data.message);
-      })
-      .catch(error => console.error('Fetch error:', error));
-  }, []);
-  
+    fetchData();
+  }, []); // Empty dependency array means this effect runs once when the component mounts
 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error fetching data: {error.message}</p>;
+  }
 
   return (
-    <div>
-      <h1>{message}</h1>
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <p>{message}</p> {/* Display the fetched message */}
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
     </div>
   );
-};
-
-const About = () => (
-  <div>
-    <h1>About Us</h1>
-    <p>This is the About page.</p>
-  </div>
-);
-
-const App = () => (
-  <Router>
-    <nav>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
-      </ul>
-    </nav>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
-    </Routes>
-  </Router>
-);
+}
 
 export default App;

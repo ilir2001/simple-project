@@ -5,7 +5,7 @@ const path = require('path');
 
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:3000', // Frontend URL
+  origin: 'http://localhost:3000', // Adjust this if your frontend is on a different port
 }));
 
 app.use(express.json());
