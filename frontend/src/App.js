@@ -7,11 +7,21 @@ import './App.css';
 const Home = () => {
   const [message, setMessage] = React.useState('');
 
+
   React.useEffect(() => {
     fetch('http://localhost:5000/api/message')
-      .then(response => response.json())
-      .then(data => setMessage(data.message));
+      .then(response => {
+        console.log(response);
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        setMessage(data.message);
+      })
+      .catch(error => console.error('Fetch error:', error));
   }, []);
+  
+
 
   return (
     <div>
