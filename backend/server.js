@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 
 
@@ -17,8 +17,9 @@ app.get('/api/message', (req, res) => {
 });
 
 
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+// Catch-all handler to serve the React app
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
 
