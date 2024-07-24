@@ -10,7 +10,7 @@
     "backend": "cd backend && npm run start",
     "frontend": "cd frontend && npm start",
     "dev": "npm run backend & npm run frontend",
-    "deploy": "npm run build --prefix frontend && npm start --prefix backend"
+    "deploy": "npm run build --prefix frontend && npm run start --prefix backend"
   },
   "keywords": [],
   "author": "",
